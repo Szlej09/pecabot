@@ -18,16 +18,17 @@ class Dbcontroller{
             die("Csatlakozási hiba".$e->getMessage());
         }
     }
-    function executeSelectQuery($query,$params) {
+    function executeSelectQuery($query,$params=[]) {
         try {
             $stmt=$this->con->prepare($query);
             $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Lekérdezési hiba".$e->getMessage());
         }
-
-
-
-
+    }
+    function closeDB()
+    {
+        $this->conn=null;
     }
 }
